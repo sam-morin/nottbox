@@ -1,48 +1,58 @@
 #!/bin/bash
 
-# Prompt the user to confirm if they want to enable the service
-echo ""
-read -p "Do you want to enable the Nottbox service to start on boot? (Y/n): " enable_service
+# Parse command-line options
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        -e|--enable-service)
+            enable_service=true
+            shift
+            ;;
+        -y|--edit-yaml)
+            edit_yaml=true
+            shift
+            ;;
+        *)
+            echo "Unknown option: $key"
+            exit 1
+            ;;
+    esac
+done
 
-if [ "$enable_service" != "n" ]; then
-    # Install git without prompting
-    sudo apt-get -y install git
+# Install git without prompting
+sudo apt-get -y install git
 
-    # Clone the repository
-    git clone https://github.com/sam-morin/nottbox.git
+# Clone the repository
+git clone https://github.com/sam-morin/nottbox.git
 
-    # Navigate to the cloned directory
-    cd nottbox
+# Navigate to the cloned directory
+cd nottbox
 
-    # Make the script executable
-    chmod +x nottbox.sh
+# Make the script executable
+chmod +x nottbox.sh
 
-    # Copy the systemd service file to the appropriate location
-    sudo cp nottbox.service /etc/systemd/system/
+# Copy the systemd service file to the appropriate location
+sudo cp nottbox.service /etc/systemd/system/
 
-    # Prompt the user to edit the YAML file using vi
-    echo ""
-    read -p "Do you want to edit the Nottbox default config file? (Y/n): " edit_yaml
+# Reload systemd daemon to pick up the new service
+sudo systemctl daemon-reload
 
-    if [ "$edit_yaml" != "n" ]; then
-        sudo vi /root/nottbox/nottbox.yml
-    else
-        echo ""
-        echo "You chose not to edit the default Nottbox YAML config file!"
-    fi
+# Edit the YAML file if specified
+if [ "$edit_yaml" == true ]; then
+    vi nottbox.yml
+fi
 
-    # Reload systemd daemon to pick up the new service
-    sudo systemctl daemon-reload
+# Enable the service if specified
+if [ "$enable_service" == true ]; then
 
     # Enable the service to start on boot
     sudo systemctl enable nottbox
-
-    # Start the service
-    sudo systemctl start nottbox
-
-    # Check the status of the service
-    sudo systemctl status nottbox
 else
-    echo ""
-    echo "WARN: Nottbox service will not be enabled to start on boot. This is probably not a good idea as Nottbox will only be able to do it's job once!"
+    echo "The Nottbox service will NOT be enabled on boot! This is probably not a good idea as Nottbox will only work once until it is started again after reboot!"
 fi
+
+# Start the service
+sudo systemctl start nottbox
+
+# Check the status of the service
+sudo systemctl status nottbox

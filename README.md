@@ -24,11 +24,11 @@ SSH into your Unifi device (this must be enabled explicitly within the web manag
 ### Automated install script. This will install Nottbox as a service and start the `nottbox` service.
 Use the installer command/script:
 ```shell
-curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh | bash
+curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh?_=$(date +%s) | bash -s -- -e -y
 ```
 *or using wget:*
 ```shell
-wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh | bash
+wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh?_=$(date +%s) | bash -s -- -e -y
 ```
 
 ### Manual install
