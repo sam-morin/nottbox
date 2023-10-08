@@ -169,11 +169,11 @@ Params (included by default, remove from command to disable/negate the below opt
 
 Use cURL:
 ```shell
-curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/uninstall-nottbox.sh | bash
+curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/uninstall-nottbox.sh | bash -s -- -f
 ```
 *or wget:*
 ```shell
-wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/uninstall-nottbox.sh | bash
+wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/uninstall-nottbox.sh | bash -s -- -f
 ```
 
 What this does:
