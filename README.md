@@ -17,11 +17,11 @@ BUT life is crazy and not all of us have a ton of time on our hands and/or the s
 Nottbox was intended for Unifi devices but Nottbox should work on most linux operating systems.
 
 
-## Quick Deployment
+## Quick Deployment (using install script)
 
 SSH into your Unifi device (this must be enabled explicitly within the web management portal)
 
-### Install script. Installs Nottbox as a service and starts the `nottbox` service.
+### Installs Nottbox as a service and starts the `nottbox` service.
 Params (included by default, remove from command to disable/negate the below options):
 <ul>
     <li>-e : enable the service</li>
