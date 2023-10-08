@@ -60,8 +60,8 @@ LOG_FILE=$(read_yaml_value "LOG_FILE" "$yaml_file")
 
 # Check if the file "reboot_needed" exists in the current directory
 if [ -e "reboot_needed" ]; then
-  pushover_message "Nottbox Unifi reboot complete." "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."    
-  log_message "Nottbox Unifi reboot complete." "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."
+  pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."    
+  log_message "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."
   # Delete the file "reboot_needed"
   rm -f "reboot_needed"
 fi
@@ -126,9 +126,9 @@ check_internet() {
 
 # print a message when the Nottbox starts
 host_name=$(hostname)
-local_ip=$(hostname -I | awk '{print $1}')
-log_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S') on $host_name ($local_ip)"
-pushover_message "Nottbox started on $host_name ($local_ip)"
+public_ip=$(hostname -I | awk '{print $1}')
+log_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S') on $host_name ($public_ip)"
+pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox started on $host_name ($public_ip)"
 
 # main loop
 while true; do
