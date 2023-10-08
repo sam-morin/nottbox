@@ -131,3 +131,15 @@ Check the service status:
 ```shell
 systemctl status nottbox
 ```
+
+
+# Uninstall Nottbox (script)
+
+Use cURL:
+```shell
+curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/uninstall-nottbox.sh | bash
+```
+*or wget:*
+```shell
+wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/uninstall-nottbox.sh | bash
+```

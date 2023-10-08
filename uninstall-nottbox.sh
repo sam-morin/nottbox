@@ -19,3 +19,4 @@ echo "Nottbox has been uninstalled."
 
 # Self-destruct this script
 rm -- "$0"
+
