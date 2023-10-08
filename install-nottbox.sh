@@ -3,8 +3,10 @@
 USER_KEY=""
 API_TOKEN=""
 
+echo "begin"
+
 # Parse command-line options
-while [[ $# -gt 0 ]]; do
+while [ $# -gt 0 ]; do
     key="$1"
     case $key in
         -e|--enable-service)
@@ -12,12 +14,22 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         -u|--user-key)
-            USER_KEY="$2"
-            shift 2
+            if [ $# -ge 2 ]; then
+                USER_KEY="$2"
+                shift 2
+            else
+                echo "Warning: Missing argument for $key"
+                shift
+            fi
             ;;
         -t|--api-token)
-            API_TOKEN="$3"
-            shift 3
+            if [ $# -ge 2 ]; then
+                API_TOKEN="$2"
+                shift 2
+            else
+                echo "Warning: Missing argument for $key"
+                shift
+            fi
             ;;
         *)
             echo "Unknown option: $key"
@@ -25,6 +37,8 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+echo "exit while loop"
 
 # Function to create the .env.pushover file
 create_env_file() {
