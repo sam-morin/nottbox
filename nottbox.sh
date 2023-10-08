@@ -30,15 +30,17 @@ split_time() {
 log_message() {
   local message="$1"
   local timestamp=$(date +'%Y-%m-%d %H:%M:%S')
+  # output the message to the terminal/console
+  echo "$timestamp - $message"
+  # append the message to the log file
   echo "$timestamp - $message" >> "$LOG_FILE"
   # check and prune log file to a maximum of 100 lines
   if [ $(wc -l < "$LOG_FILE") -gt 50 ]; then
     tail -n 50 "$LOG_FILE" > "$LOG_FILE.tmp"
     mv "$LOG_FILE.tmp" "$LOG_FILE"
   fi
-  # output the message to the terminal/console
-  echo "$timestamp - $message"
 }
+
 
 # check if PAUSE_START and PAUSE_END are not empty strings
 if [ -n "$PAUSE_START" ] && [ -n "$PAUSE_END" ]; then
