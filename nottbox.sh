@@ -23,8 +23,9 @@ LOG_FILE=$(read_yaml_value "LOG_FILE" "$yaml_file")
 # function to split a time string (e.g., "3:45") into hours and minutes
 split_time() {
   local time="$1"
-  echo "$time" | awk -F':' '{print $1, $2}'
+  echo "$time" | awk -F':' '{print int($1), int($2)}'
 }
+
 
 # check if PAUSE_START and PAUSE_END are not empty strings
 if [ -n "$PAUSE_START" ] && [ -n "$PAUSE_END" ]; then
