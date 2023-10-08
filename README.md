@@ -17,6 +17,12 @@ BUT life is crazy and not all of us have a ton of time on our hands and/or the s
 Nottbox was intended for Unifi devices but it should work on most linux operating systems that use systemd (think OpenWRT).
 
 
+- [Quick Deployment (using install script)](#quick-deployment-using-install-script)
+- [Manual Deployment](#manual-deployment)
+- [Utilize Nottbox as a systemd service](#utilize-nottbox-as-a-systemd-service)
+- [Uninstall Nottbox (script)](#uninstall-nottbox-script)
+
+
 ## Quick Deployment (using install script)
 
 SSH into your Unifi device (this must be enabled explicitly within the web management portal)
