@@ -41,6 +41,7 @@ pushover_message() {
       --form-string "title=$TITLE" \
       --form-string "message=$MESSAGE" \
       https://api.pushover.net/1/messages.json
+    log_message "Sent Pushover notification."
   else
     log_message "USER_KEY or API_TOKEN is empty. Skipping Pushover notification."
   fi
@@ -124,9 +125,9 @@ check_internet() {
 }
 
 # print a message when the Nottbox starts
-log_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S') on $host_name ($local_ip)"
 host_name=$(hostname)
 local_ip=$(hostname -I | awk '{print $1}')
+log_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S') on $host_name ($local_ip)"
 pushover_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S') on $host_name ($local_ip)"
 
 # main loop
