@@ -64,7 +64,7 @@ is_time_between() {
   local start_minute=$2
   local end_hour=$3
   local end_minute=$4
-  local current_hour=$(date -u -d '-4 hours' +'%H') # convert to EST (-4 hours)
+  local current_hour=$(date -u -d '-4 hours' +'%H' | sed 's/^0//') # remove leading zeros
   local current_minute=$(date -u -d '-4 hours' +'%M') # convert to EST (-4 hours)
 
   # convert start and end times to minutes since midnight
