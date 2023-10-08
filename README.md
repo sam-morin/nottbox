@@ -37,6 +37,24 @@ curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottb
 wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh?_=$(date +%s) | bash -s -- -e
 ```
 
+### Result:
+```shell
+● nottbox.service - A software defined Wattbox cousin for Unifi devices.
+     Loaded: loaded (/etc/systemd/system/nottbox.service; enabled; vendor preset: enabled)
+     Active: active (running) since Sun 2023-10-08 08:47:01 EDT; 2min 51s ago
+   Main PID: 411110 (nottbox.sh)
+      Tasks: 2 (limit: 2386)
+     Memory: 2.7M
+        CPU: 134ms
+     CGroup: /system.slice/nottbox.service
+             ├─411110 /bin/bash /root/nottbox/nottbox.sh
+             └─412050 sleep 30
+
+Oct 08 08:47:01 unifi-ckg2-1 systemd[1]: Started A software defined Wattbox cousin for Unifi devices..
+Oct 08 08:47:01 unifi-ckg2-1 nottbox.sh[411110]: Nottbox will pause monitoring between 3:45 and 4:45 nightly update window.
+Oct 08 08:47:01 unifi-ckg2-1 nottbox.sh[411110]: Nottbox started at 2023-10-08 08:47:01
+```
+
 
 ## Manual deployment
 
