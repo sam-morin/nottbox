@@ -61,6 +61,10 @@ LOG_FILE=$(read_yaml_value "LOG_FILE" "$yaml_file")
 get_data() {
   info_output=$(info)
   echo "$info_output" > reboot_needed
+  cpu_temp=$(ubnt-systool cputemp)
+  cpu_load=$(ubnt-systool cpuload)
+  echo "CPU Temp: $cpu_temp°C" >> reboot_needed 
+  echo "CPU Load: $cpu_load%" >> reboot_needed 
 }
 pull_data() {
   data=$(<reboot_needed)
@@ -69,7 +73,7 @@ pull_data() {
 
 # Check if the file "reboot_needed" exists in the current directory
 if [ -e "reboot_needed" ]; then
-  pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online. \n\n$(get_data)"    
+  pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online. \n\n$(pull_data)"    
   log_message "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."
   # Delete the file "reboot_needed"
   rm -f "reboot_needed"
