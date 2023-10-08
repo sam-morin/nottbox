@@ -9,6 +9,7 @@ If this script proves to be useful to you, it probably means you need to:
 
 BUT if you don't have the money or time to deal with this (or purchase a new beefier device) Nottbox could help you.
 
+
 ## Deployment
 
 SSH into your Unifi device (this must be enabled explicitly within the web management portal)
@@ -29,11 +30,13 @@ PAUSE_END: 4:45
 LOG_FILE: /root/nottbox/nottbox.log
 ```
 *Time is to be defined in 24 hour format*
+
 *If using the pause functionality, please ensure that your timezone is correct by comparing the current hour with the hour returned from this command:*
 ```shell
 date -u -d '-4 hours' +'%H'
 ```
 *Adjust your specified time as necessary. Timezone correction configuration option will be added soon!*
+
 
 Set execute file permission:
 ```shell
@@ -44,6 +47,7 @@ Run Nottbox:
 ```shell
 sh nottbox.sh
 ```
+
 
 ## Utilize Nottbox as a systemd service
 
@@ -75,6 +79,7 @@ Type=simple
 [Install]
 WantedBy=multi-user.target
 ```
+
 
 # Reload daemon, enable and start the service
 
