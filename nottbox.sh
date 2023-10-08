@@ -1,30 +1,6 @@
 #!/bin/bash
 
-# define the Nottbox YAML configuration file path
-yaml_file="/root/nottbox/nottbox.yml"
-
-# define a function to read a value from the YAML file
-read_yaml_value() {
-  local key="$1"
-  local yaml_file="$2"
-  local value
-  value=$(grep -E "$key:" "$yaml_file" | sed -e 's/^[[:space:]]*'"$key"':[[:space:]]*//' -e 's/[[:space:]]*$//')
-  echo "$value"
-}
-
-# read values from the YAML file
-DOMAIN_OR_IP=$(read_yaml_value "DOMAIN_OR_IP" "$yaml_file")
-PING_FREQUENCY_SEC=$(read_yaml_value "PING_FREQUENCY_SEC" "$yaml_file")
-DOWNTIME_THRESHOLD_SEC=$(read_yaml_value "DOWNTIME_THRESHOLD_SEC" "$yaml_file")
-PAUSE_START=$(read_yaml_value "PAUSE_START" "$yaml_file")
-PAUSE_END=$(read_yaml_value "PAUSE_END" "$yaml_file")
-LOG_FILE=$(read_yaml_value "LOG_FILE" "$yaml_file")
-
-# function to split a time string (e.g., "3:45") into hours and minutes
-split_time() {
-  local time="$1"
-  echo "$time" | awk -F':' '{print int($1), int($2)}'
-}
+source .env.pushover
 
 # function to log a message and prune if necessary
 log_message() {
@@ -41,7 +17,59 @@ log_message() {
   fi
 }
 
+# define a function to read a value from the YAML file
+read_yaml_value() {
+  local key="$1"
+  local yaml_file="$2"
+  local value
+  value=$(grep -E "$key:" "$yaml_file" | sed -e 's/^[[:space:]]*'"$key"':[[:space:]]*//' -e 's/[[:space:]]*$//')
+  echo "$value"
+}
 
+pushover_message() {
+  # Send a Pushover notification
+  TITLE="$1"
+  MESSAGE="$2"
+
+  # Check if USER_KEY or API_TOKEN is empty
+  if [ -n "$USER_KEY" ] && [ -n "$API_TOKEN" ]; then
+    curl -s \
+      --form-string "token=$API_TOKEN" \
+      --form-string "user=$USER_KEY" \
+      --form-string "title=$TITLE" \
+      --form-string "message=$MESSAGE" \
+      https://api.pushover.net/1/messages.json
+  else
+    log_message "USER_KEY or API_TOKEN is empty. Skipping Pushover notification."
+  fi
+}
+
+
+# Check if the file "reboot_needed" exists in the current directory
+if [ -e "reboot_needed" ]; then
+    pushover_message "Nottbox Unifi reboot complete." "The network was down for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."    
+    log_message "Nottbox Unifi reboot complete." "The network was down for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."
+    # Delete the file "reboot_needed"
+    rm -f "reboot_needed"
+fi
+
+
+# define the Nottbox YAML configuration file path
+yaml_file="/root/nottbox/nottbox.yml"
+
+# read values from the YAML file
+DOMAIN_OR_IP=$(read_yaml_value "DOMAIN_OR_IP" "$yaml_file")
+PING_FREQUENCY_SEC=$(read_yaml_value "PING_FREQUENCY_SEC" "$yaml_file")
+DOWNTIME_THRESHOLD_SEC=$(read_yaml_value "DOWNTIME_THRESHOLD_SEC" "$yaml_file")
+PAUSE_START=$(read_yaml_value "PAUSE_START" "$yaml_file")
+PAUSE_END=$(read_yaml_value "PAUSE_END" "$yaml_file")
+LOG_FILE=$(read_yaml_value "LOG_FILE" "$yaml_file")
+
+# function to split a time string (e.g., "3:45") into hours and minutes
+split_time() {
+  local time="$1"
+  echo "$time" | awk -F':' '{print int($1), int($2)}'
+}
 
 # check if PAUSE_START and PAUSE_END are not empty strings
 if [ -n "$PAUSE_START" ] && [ -n "$PAUSE_END" ]; then
@@ -106,6 +134,7 @@ while true; do
     
     if ! check_internet; then
       log_message "Internet still not available. Rebooting..."
+      touch reboot_needed
       /bin/vbash -ic 'sudo shutdown -r now'
     fi
   fi

@@ -1,2 +1,3 @@
 ./install-nottbox.sh
 ./uninstall-nottbox.sh
+.env.pushover
