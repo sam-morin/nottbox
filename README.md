@@ -6,7 +6,7 @@ Nottbox is a Wattbox-like bash script (that can run as a service) that will rebo
 
 Since Nottbox is a bash script, it has a very small footprint at under 500KB. 
 
-If this script proves to be useful to you, it probably means you need to:
+If Nottbox proves to be useful to you, it probably means you need to:
 
 <ul>
     <li>check to ensure you're running on the latest firmware version on all devices within your Unifi environment, including the network controller</li>
@@ -59,6 +59,8 @@ PAUSE_START: 3:45
 PAUSE_END: 4:45
 LOG_FILE: /root/nottbox/nottbox.log
 ```
+*These are the default values*
+
 *Time is to be defined in 24 hour format*
 
 *If using the pause functionality, please ensure that your timezone is correct by comparing the current hour with the hour returned from this command:*
