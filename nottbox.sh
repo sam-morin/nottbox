@@ -152,7 +152,7 @@ status=$(echo "$info_output" | awk -F ': ' '/Status/ {print $2}')
 host_name=$(hostname)
 public_ip=$(hostname -I | awk '{print $1}')
 log_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S') on $host_name ($public_ip)"
-pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox started on $host_name ($public_ip) \nModel: $model \nVersion: $version \nMac Address: $mac_address \nIP Address: $ip_address \nHostname: $hostname \nUptime: $uptime \nNTP Status: $ntp_status \nStatus: $status"
+pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox started on $host_name ($public_ip) \\nModel: $model \\nVersion: $version \\nMac Address: $mac_address \\nIP Address: $ip_address \\nHostname: $hostname \nUptime: $uptime \\nNTP Status: $ntp_status \\nStatus: $status"
 
 # main loop
 while true; do
