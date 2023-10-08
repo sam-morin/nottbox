@@ -77,7 +77,8 @@ After=network.target
 
 [Service]
 ExecStart=/root/nottbox/nottbox.sh
-Restart=always
+Restart=on-failure
+RestartSec=2s
 User=root
 Group=root
 Type=simple
