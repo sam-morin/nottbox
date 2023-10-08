@@ -50,8 +50,8 @@ log_message() {
   local timestamp=$(date +'%Y-%m-%d %H:%M:%S')
   echo "$timestamp - $message" >> "$LOG_FILE"
   # check and prune log file to a maximum of 30 lines
-  if [ $(wc -l < "$LOG_FILE") -gt 30 ]; then
-    tail -n 30 "$LOG_FILE" > "$LOG_FILE.tmp"
+  if [ $(wc -l < "$LOG_FILE") -gt 50 ]; then
+    tail -n 50 "$LOG_FILE" > "$LOG_FILE.tmp"
     mv "$LOG_FILE.tmp" "$LOG_FILE"
   fi
   # output the message to the terminal/console

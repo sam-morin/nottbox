@@ -8,9 +8,10 @@ If this script proves to be useful to you, it probably means you need to:
     <li>check to ensure you're running on the latest firmware version on all devices within your Unifi environment, including the network controller</li>
     <li>get Unifi support to assist or RMA the device</li>
     <li>investigate purchasing a new device with a higher capacity</li>
+    <li>reboot your malfunctioning device (lol)</li>
 </ul>
 
-BUT life is crazy and not all of us have a ton of time and/or the salary of a NASA senior aerospace engineer - in cases like these, Nottbox is here.
+BUT life is crazy and not all of us have a ton of time on our hands and/or the salary of a NASA senior aerospace engineer - in cases like these, Nottbox is here.
 
 Nottbox was intended for Unifi devices but Nottbox should work on most linux operating systems.
 
