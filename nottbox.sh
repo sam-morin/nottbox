@@ -14,12 +14,10 @@ read_yaml_value() {
 
 # read values from the YAML file
 DOMAIN_OR_IP=$(read_yaml_value "DOMAIN_OR_IP" "$yaml_file")
-DOWNTIME_THRESHOLD_MIN=$(read_yaml_value "DOWNTIME_THRESHOLD_MIN" "$yaml_file")
+DOWNTIME_THRESHOLD_SEC=$(read_yaml_value "DOWNTIME_THRESHOLD_SEC" "$yaml_file")
 PAUSE_START=$(read_yaml_value "PAUSE_START" "$yaml_file")
 PAUSE_END=$(read_yaml_value "PAUSE_END" "$yaml_file")
 LOG_FILE=$(read_yaml_value "LOG_FILE" "$yaml_file")
-
-DOWNTIME_THRESHOLD_SEC=$((DOWNTIME_THRESHOLD_MIN * 60))
 
 # function to split a time string (e.g., "3:45") into hours and minutes
 split_time() {
