@@ -4,7 +4,7 @@
 
 Nottbox is a Wattbox-like bash script (that can run as a service) that will reboot a Unifi device if it cannot ping an IP address or hostname for longer than 2.5 minutes (default - 150 seconds). Some devices in my Unifi environment will go offline while remaining physically powered on for no apparent reason. Some days/weeks/months are better than others, but today it happened 3 times - and now we have Nottbox.
 
-Since Nottbox is a bash script, it has a very small footprint at under 500KB. 
+Since Nottbox is a bash script, the entire project directory has a very small footprint at under 30KB. 
 
 If Nottbox proves to be useful to you, it probably means you need to:
 
@@ -173,10 +173,10 @@ wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/uninstall-not
 
 What this does:
 <ol>
-  <li>Stop the Nottbox service</li>
-  <li>Disable the Nottbox service</li>
-  <li>Delete the Nottbox service</li>
-  <li>Reload systemd daemon</li>
-  <li>Remove the Nottbox directory</li>
-  <li>Uninstall git & clean up packages</li>
+  <li>Stops the Nottbox service</li>
+  <li>Disables the Nottbox service</li>
+  <li>Deletes the Nottbox service</li>
+  <li>Reloads systemd daemon</li>
+  <li>Removes the Nottbox directory</li>
+  <li>Uninstalls git & cleans up packages</li>
 </ol>
