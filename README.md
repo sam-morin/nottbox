@@ -1,4 +1,4 @@
-# Nottbox
+# Nottbox - Auto-reboot device on ping failures
 
 [Quick Deployment (script)](#quick-deployment-using-install-script) • [Uninstall Nottbox (script)](#uninstall-nottbox-script) • [Manual Deployment](#manual-deployment)
 
