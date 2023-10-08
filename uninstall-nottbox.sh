@@ -70,5 +70,9 @@ echo ""
 echo "Thank you for using Nottbox! - https://github.com/sam-morin/nottbox"
 echo ""
 
+if [ "$(pwd)" = "/root/nottbox" ]; then
+    cd /root
+fi
+
 # Exit the script gracefully
 exit 0
