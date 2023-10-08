@@ -2,11 +2,10 @@
 
 USER_KEY=""
 API_TOKEN=""
-
-echo "begin"
+ENV_FILE=".env.pushover"
 
 # Parse command-line options
-while [ $# -gt 0 ]; do
+while [[ $# -gt 0 ]]; do
     key="$1"
     case $key in
         -e|--enable-service)
@@ -14,22 +13,12 @@ while [ $# -gt 0 ]; do
             shift
             ;;
         -u|--user-key)
-            if [ $# -ge 2 ]; then
-                USER_KEY="$2"
-                shift 2
-            else
-                echo "Warning: Missing argument for $key"
-                shift
-            fi
+            USER_KEY="$2"
+            shift 2
             ;;
         -t|--api-token)
-            if [ $# -ge 2 ]; then
-                API_TOKEN="$2"
-                shift 2
-            else
-                echo "Warning: Missing argument for $key"
-                shift
-            fi
+            API_TOKEN="$2"
+            shift 2
             ;;
         *)
             echo "Unknown option: $key"
@@ -38,11 +27,8 @@ while [ $# -gt 0 ]; do
     esac
 done
 
-echo "exit while loop"
-
 # Function to create the .env.pushover file
 create_env_file() {
-    ENV_FILE=".env.pushover"
     echo "USER_KEY=$USER_KEY" > "$ENV_FILE"
     echo "API_TOKEN=$API_TOKEN" >> "$ENV_FILE"
     echo "Environment variables saved to $ENV_FILE"
@@ -50,9 +36,10 @@ create_env_file() {
 
 # Create the .env.pushover file if USER_KEY and API_TOKEN are provided
 if [ -n "$USER_KEY" ] && [ -n "$API_TOKEN" ]; then
-    echo ""
     echo "Pushover keys passed! Creating .env.pushover file..."
     create_env_file
+else
+    echo "Warning: USER_KEY and API_TOKEN not provided. .env.pushover file not created."
 fi
 
 # Install git without prompting
