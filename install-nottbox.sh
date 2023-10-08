@@ -18,7 +18,7 @@ done
 # Install git without prompting
 echo ""
 echo "Installing git..."
-sudo apt-get -y install git
+sudo apt-get -y install git > /dev/null 2>&1;
 
 # Clone the repository
 echo ""
