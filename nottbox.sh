@@ -39,9 +39,9 @@ if [ -n "$PAUSE_START" ] && [ -n "$PAUSE_END" ]; then
   IFS=" " read -r END_HOUR END_MINUTE < temp_file
   rm -f temp_file
 
-  echo "Nottbox will pause monitoring between $PAUSE_START and $PAUSE_END nightly update window."
+  log_message "Nottbox will pause monitoring between $PAUSE_START and $PAUSE_END nightly update window."
 else
-  echo "Nottbox will not pause for a nightly update window because PAUSE_START and/or PAUSE_END was not specified."
+  log_message "Nottbox will not pause for a nightly update window because PAUSE_START and/or PAUSE_END was not specified."
 fi
 
 # function to log a message and prune if necessary
@@ -49,7 +49,7 @@ log_message() {
   local message="$1"
   local timestamp=$(date +'%Y-%m-%d %H:%M:%S')
   echo "$timestamp - $message" >> "$LOG_FILE"
-  # check and prune log file to a maximum of 30 lines
+  # check and prune log file to a maximum of 100 lines
   if [ $(wc -l < "$LOG_FILE") -gt 50 ]; then
     tail -n 50 "$LOG_FILE" > "$LOG_FILE.tmp"
     mv "$LOG_FILE.tmp" "$LOG_FILE"
@@ -79,11 +79,11 @@ is_time_between() {
 # function to check internet connectivity
 check_internet() {
   if is_time_between "$START_HOUR" "$START_MINUTE" "$END_HOUR" "$END_MINUTE"; then
-    echo "Nottbox is currently paused between $START_HOUR:$START_MINUTE and $END_HOUR:$END_MINUTE."
+    log_message "Nottbox is currently paused between $START_HOUR:$START_MINUTE and $END_HOUR:$END_MINUTE."
     while is_time_between "$START_HOUR" "$START_MINUTE" "$END_HOUR" "$END_MINUTE"; do
       sleep 60
     done
-    echo "Resuming Nottbox after $END_HOUR:$END_MINUTE"
+    log_message "Resuming Nottbox after $END_HOUR:$END_MINUTE"
   fi
   
   if /bin/ping -q -w 1 -c 1 "$DOMAIN_OR_IP" > /dev/null 2>&1; then
@@ -94,7 +94,7 @@ check_internet() {
 }
 
 # print a message when the Nottbox starts
-echo "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S')"
+log_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S')"
 
 # main loop
 while true; do
