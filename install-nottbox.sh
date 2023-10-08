@@ -2,7 +2,7 @@
 
 USER_KEY=""
 API_TOKEN=""
-ENV_FILE=".env.pushover"
+ENV_FILE="/root/nottbox/.env.pushover"
 
 # Parse command-line options
 while [[ $# -gt 0 ]]; do
@@ -27,21 +27,6 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Function to create the .env.pushover file
-create_env_file() {
-    echo "USER_KEY=$USER_KEY" > "$ENV_FILE"
-    echo "API_TOKEN=$API_TOKEN" >> "$ENV_FILE"
-    echo "Environment variables saved to $ENV_FILE"
-}
-
-# Create the .env.pushover file if USER_KEY and API_TOKEN are provided
-if [ -n "$USER_KEY" ] && [ -n "$API_TOKEN" ]; then
-    echo "Pushover keys passed! Creating .env.pushover file..."
-    create_env_file
-else
-    echo "Warning: USER_KEY and API_TOKEN not provided. .env.pushover file not created."
-fi
-
 # Install git without prompting
 echo ""
 echo "Installing git..."
@@ -63,6 +48,21 @@ apt-get remove --purge git -y > /dev/null 2>&1;
 echo ""
 echo "Cleaning up packages..."
 apt-get autoremove -y > /dev/null 2>&1;
+
+# Function to create the .env.pushover file
+create_env_file() {
+    echo "USER_KEY=$USER_KEY" > "$ENV_FILE"
+    echo "API_TOKEN=$API_TOKEN" >> "$ENV_FILE"
+    echo "Environment variables saved to $ENV_FILE"
+}
+
+# Create the .env.pushover file if USER_KEY and API_TOKEN are provided
+if [ -n "$USER_KEY" ] && [ -n "$API_TOKEN" ]; then
+    echo "Pushover keys passed! Creating .env.pushover file..."
+    create_env_file
+else
+    echo "Warning: USER_KEY and API_TOKEN not provided. .env.pushover file not created."
+fi
 
 # Make the script executable
 echo ""
