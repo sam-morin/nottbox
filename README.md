@@ -180,3 +180,6 @@ What this does:
   <li>Removes the Nottbox directory</li>
   <li>Uninstalls git & cleans up packages</li>
 </ol>
+
+
+[Quick Deployment (script)](#quick-deployment-using-install-script) • [Uninstall Nottbox (script)](#uninstall-nottbox-script) • [Manual Deployment](#manual-deployment)

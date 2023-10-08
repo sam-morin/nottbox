@@ -1,2 +1,2 @@
-install-nottbox.sh
-uninstall-nottbox.sh
+./install-nottbox.sh
+./uninstall-nottbox.sh
