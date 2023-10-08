@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [ -e ".env.pushover" ]; then
-  source .env.pushover
+if [ -e "/root/nottbox/.env.pushover" ]; then
+  source /root/nottbox/.env.pushover
 fi
 
 # function to log a message and prune if necessary
