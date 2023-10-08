@@ -1,5 +1,20 @@
 #!/bin/bash
 
+# Parse command-line options
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        -f|--remove-log)
+            remove_log=true
+            shift
+            ;;
+        *)
+            echo "Unknown option: $key"
+            exit 1
+            ;;
+    esac
+done
+
 # Stop the Nottbox service if it's running
 echo ""
 echo "Stopping the Nottbox service..."
@@ -19,6 +34,11 @@ rm /etc/systemd/system/nottbox.service
 echo ""
 echo "Reloading systemd daemomn..."
 systemctl daemon-reload
+
+# Move log file to /root/nottbox.log
+if [ "$remove_log" != true ]; then
+    mv /root/nottbox/nottbox.log /root/nottbox.log
+fi
 
 # Remove the Nottbox directory
 echo ""
