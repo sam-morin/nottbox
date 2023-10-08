@@ -2,7 +2,7 @@
 
 USER_KEY=""
 API_TOKEN=""
-ENV_FILE="/root/nottbox/.env.pushover"
+ENV_FILE=".env.pushover"
 
 # Parse command-line options
 while [[ $# -gt 0 ]]; do
