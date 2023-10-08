@@ -164,7 +164,7 @@ systemctl status nottbox
 
 Params (included by default, remove from command to disable/negate the below options):
 <ul>
-    <li>-f | --remove-log : delete the log as well (if this is omitted, the log file will be moved to /root/nottbox.log before deleting /root/nottbox/)</li>
+    <li>-f | --remove-log : delete the log as well (if this is omitted, the log file will be moved to `/root/nottbox.log` before deleting `/root/nottbox/`)</li>
 </ul>
 
 Use cURL:
