@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "Uninstalling Nottbox..."
+
 # Stop the Nottbox service if it's running
 systemctl stop nottbox
 
@@ -14,6 +16,12 @@ systemctl daemon-reload
 
 # Remove the Nottbox directory
 rm -rf /root/nottbox
+
+# Uninstall the git package
+apt-get remove --purge git -y
+
+# Clean up unused packages and dependencies (optional)
+apt-get autoremove -y
 
 echo "Nottbox has been uninstalled."
 
