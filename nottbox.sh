@@ -44,16 +44,6 @@ pushover_message() {
   fi
 }
 
-
-# Check if the file "reboot_needed" exists in the current directory
-if [ -e "reboot_needed" ]; then
-    pushover_message "Nottbox Unifi reboot complete." "The network was down for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."    
-    log_message "Nottbox Unifi reboot complete." "The network was down for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."
-    # Delete the file "reboot_needed"
-    rm -f "reboot_needed"
-fi
-
-
 # define the Nottbox YAML configuration file path
 yaml_file="/root/nottbox/nottbox.yml"
 
@@ -64,6 +54,14 @@ DOWNTIME_THRESHOLD_SEC=$(read_yaml_value "DOWNTIME_THRESHOLD_SEC" "$yaml_file")
 PAUSE_START=$(read_yaml_value "PAUSE_START" "$yaml_file")
 PAUSE_END=$(read_yaml_value "PAUSE_END" "$yaml_file")
 LOG_FILE=$(read_yaml_value "LOG_FILE" "$yaml_file")
+
+# Check if the file "reboot_needed" exists in the current directory
+if [ -e "reboot_needed" ]; then
+  pushover_message "Nottbox Unifi reboot complete." "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."    
+  log_message "Nottbox Unifi reboot complete." "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."
+  # Delete the file "reboot_needed"
+  rm -f "reboot_needed"
+fi
 
 # function to split a time string (e.g., "3:45") into hours and minutes
 split_time() {
