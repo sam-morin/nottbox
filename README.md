@@ -38,7 +38,7 @@ wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottb
 ```
 
 ### Result:
-```shell
+```sh
 ● nottbox.service - A software defined Wattbox cousin for Unifi devices.
      Loaded: loaded (/etc/systemd/system/nottbox.service; enabled; vendor preset: enabled)
      Active: active (running) since Sun 2023-10-08 08:47:01 EDT; 2min 51s ago
