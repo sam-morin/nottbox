@@ -128,7 +128,7 @@ check_internet() {
 host_name=$(hostname)
 local_ip=$(hostname -I | awk '{print $1}')
 log_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S') on $host_name ($local_ip)"
-pushover_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S') on $host_name ($local_ip)"
+pushover_message "Nottbox started on $host_name ($local_ip)"
 
 # main loop
 while true; do
