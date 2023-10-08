@@ -9,6 +9,8 @@ If this script proves to be useful to you, it probably means you need to:
 
 BUT if you don't have the money or time to deal with this (or purchase a new beefier device) Nottbox could help you.
 
+Nottbox was intended for Unifi devices but Nottbox should work on most linux operating systems.
+
 
 ## Deployment
 
@@ -96,4 +98,9 @@ systemctl enable nottbox
 Finally, start the service:
 ```shell
 systemctl start nottbox
+```
+
+Check the service status:
+```shell
+systemctl status nottbox
 ```
