@@ -21,6 +21,7 @@ Nottbox was intended for Unifi devices but Nottbox should work on most linux ope
 
 SSH into your Unifi device (this must be enabled explicitly within the web management portal)
 
+### Automated install script. This will install Nottbox as a service
 Use the installer command/script:
 ```shell
 curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh | bash
@@ -30,8 +31,7 @@ curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottb
 wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh | bash
 ```
 
-Or install manually:
-
+### Manual install
 In the root directory (you should be here by default after login - but you can check with `pwd`), clone the repo and CD into the Nottbox directory:
 ```shell
 git clone https://github.com/sam-morin/nottbox.git
