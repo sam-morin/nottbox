@@ -6,7 +6,7 @@ sudo apt-get -y install git
 # Prompt the user to confirm if they want to enable the service
 read -p "Do you want to enable the Nottbox service to start on boot? (Y/n): " enable_service
 
-if [ "$enable_service" !== "n" ]; then
+if [ "$enable_service" != "n" ]; then
     # Clone the repository
     git clone https://github.com/sam-morin/nottbox.git
 
