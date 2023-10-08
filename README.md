@@ -1,6 +1,7 @@
 # Nottbox
 
-[Quick Deployment (script)](#quick-deployment-using-install-script) • [Uninstall Nottbox (script)](#uninstall-nottbox-script) • [Manual Deployment](#manual-deployment)
+<span style="font-size: larger;">[Quick Deployment (script)](#quick-deployment-using-install-script)</span> • <span style="font-size: larger;">[Uninstall Nottbox (script)](#uninstall-nottbox-script)</span> • <span style="font-size: larger;">[Manual Deployment](#manual-deployment)</span>
+
 
 Nottbox is a Wattbox-like bash script (that can run as a service) that will reboot a Unifi device if it cannot ping an IP address or hostname for longer than 2.5 minutes (default - 150 seconds). Some devices in my Unifi environment will go offline while remaining physically powered on for no apparent reason. Some days/weeks/months are better than others, but today it happened 3 times - and now we have Nottbox.
 
