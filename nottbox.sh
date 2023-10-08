@@ -31,7 +31,7 @@ log_message() {
   local message="$1"
   local timestamp=$(date +'%Y-%m-%d %H:%M:%S')
   # output the message to the terminal/console
-  echo "$timestamp - $message"
+  echo "$timestamp - $message" >&1  # Redirect to stdout
   # append the message to the log file
   echo "$timestamp - $message" >> "$LOG_FILE"
   # check and prune log file to a maximum of 100 lines
@@ -40,6 +40,7 @@ log_message() {
     mv "$LOG_FILE.tmp" "$LOG_FILE"
   fi
 }
+
 
 
 # check if PAUSE_START and PAUSE_END are not empty strings
