@@ -1,25 +1,25 @@
 # Nottbox
 
-Nottbox is a Wattbox-like bash script that will reboot a Unifi device if it cannot ping an IP address or hostname for longer than 5 minutes. Some devices in my Unifi environment will go offline while remaining physically powered on for no apparent reason. Some days/weeks/months are better than others, but today it happened 3 times - and now we have Nottbox.
+Nottbox is a Wattbox-like bash script that will reboot a Unifi device if it cannot ping an IP address or hostname for longer than 5 minutes (default). Some devices in my Unifi environment will go offline while remaining physically powered on for no apparent reason. Some days/weeks/months are better than others, but today it happened 3 times - and now we have Nottbox.
 
 If this script proves to be useful to you, it probably means you need to:
     - check to ensure you're running on the latest firmware version on all devices within your Unifi environment, including the network controller
     - get Unifi support to assist or RMA the device
     - investigate purchasing a new device with a higher capacity
 
-BUT if you don't have the money or time to deal with this (or purchase a new beefier device) Nottbox will help you.
+BUT if you don't have the money or time to deal with this (or purchase a new beefier device) Nottbox could help you.
 
 ## Deployment
 
 SSH into your Unifi device (this must be enabled explicitly within the web management portal)
 
-In the root directory, clone the repo and CD into the Nottbox directory:
+In the root directory (you should be here by default after login - but you can check with `pwd`), clone the repo and CD into the Nottbox directory:
 ```shell
 git clone https://github.com/this-repo
 cd nottbox
 ```
 
-Edit `nottbox.yml` to specify your configuration options:
+Edit `nottbox.yml` to specify your preferences (if a pause is not needed, leave `PAUSE_START` and `PAUSE_END` blank):
 ```yml
 # Configuration file for Nottbox
 DOMAIN_OR_IP: one.one.one.one
@@ -28,6 +28,12 @@ PAUSE_START: 3:45
 PAUSE_END: 4:45
 LOG_FILE: /root/nottbox/nottbox.log
 ```
+*Time is to be defined in 24 hour format*
+*If using the pause functionality, please ensure that your timezone is correct by comparing the current hour with the hour returned from this command:*
+```shell
+date -u -d '-4 hours' +'%H'
+```
+*Adjust your specified time as necessary. Timezone correction configuration option will be added soon!*
 
 Set execute file permission:
 ```shell
