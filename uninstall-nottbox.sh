@@ -56,6 +56,9 @@ echo "Cleaning up packages..."
 apt-get autoremove -y > /dev/null 2>&1;
 
 echo ""
+echo "----------------------------------------------------------------------"
+
+echo ""
 echo "Nottbox has been uninstalled, and the git package has been removed."
 
 # Schedule self-destruct using 'at' command
