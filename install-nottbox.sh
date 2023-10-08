@@ -47,4 +47,3 @@ sudo systemctl start nottbox
 
 # Check the status of the service
 sudo systemctl status nottbox
-# cat nottbox.log
