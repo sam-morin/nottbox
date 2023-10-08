@@ -59,7 +59,7 @@ echo ""
 echo "----------------------------------------------------------------------"
 
 echo ""
-echo "Nottbox has been uninstalled, and the git package has been removed."
+echo "Nottbox has been uninstalled."
 
 # Schedule self-destruct using 'at' command
 # echo "rm -- \"\$0\"" | at now + 15 seconds

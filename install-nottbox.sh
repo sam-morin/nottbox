@@ -1,5 +1,8 @@
 #!/bin/bash
 
+USER_KEY=""
+API_TOKEN=""
+
 # Parse command-line options
 while [[ $# -gt 0 ]]; do
     key="$1"
