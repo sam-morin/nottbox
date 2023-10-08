@@ -58,9 +58,18 @@ PAUSE_START=$(read_yaml_value "PAUSE_START" "$yaml_file")
 PAUSE_END=$(read_yaml_value "PAUSE_END" "$yaml_file")
 LOG_FILE=$(read_yaml_value "LOG_FILE" "$yaml_file")
 
+get_data() {
+  info_output=$(info)
+  echo "$info_output" > reboot_needed
+}
+pull_data() {
+  data=$(<reboot_needed)
+  return $data
+}
+
 # Check if the file "reboot_needed" exists in the current directory
 if [ -e "reboot_needed" ]; then
-  pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."    
+  pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online. \n\n$(get_data)"    
   log_message "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."
   # Delete the file "reboot_needed"
   rm -f "reboot_needed"
@@ -124,11 +133,22 @@ check_internet() {
   fi
 }
 
+# Run the "info" command and store its output in a variable
+info_output=$(info)
+# Extract and assign data to variables
+model=$(echo "$info_output" | awk -F ': ' '/Model/ {print $2}')
+version=$(echo "$info_output" | awk -F ': ' '/Version/ {print $2}')
+mac_address=$(echo "$info_output" | awk -F ': ' '/MAC Address/ {print $2}')
+ip_address=$(echo "$info_output" | awk -F ': ' '/IP Address/ {print $2}')
+hostname=$(echo "$info_output" | awk -F ': ' '/Hostname/ {print $2}')
+uptime=$(echo "$info_output" | awk -F ': ' '/Uptime/ {print $2}')
+ntp_status=$(echo "$info_output" | awk -F ': ' '/NTP/ {print $2}')
+status=$(echo "$info_output" | awk -F ': ' '/Status/ {print $2}')
 # print a message when the Nottbox starts
 host_name=$(hostname)
 public_ip=$(hostname -I | awk '{print $1}')
 log_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S') on $host_name ($public_ip)"
-pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox started on $host_name ($public_ip)"
+pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox started on $host_name ($public_ip) \nModel: $model \nVersion: $version \nMac Address: $mac_address \nIP Address: $ip_address \nHostname: $hostname \nUptime: $uptime \nNTP Status: $ntp_status \nStatus: $status"
 
 # main loop
 while true; do
@@ -139,6 +159,7 @@ while true; do
     if ! check_internet; then
       log_message "Internet still not available. Rebooting..."
       touch reboot_needed
+      get_data
       /bin/vbash -ic 'sudo shutdown -r now'
     fi
   fi
