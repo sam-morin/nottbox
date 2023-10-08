@@ -59,7 +59,7 @@ PAUSE_END=$(read_yaml_value "PAUSE_END" "$yaml_file")
 LOG_FILE=$(read_yaml_value "LOG_FILE" "$yaml_file")
 
 get_data() {
-  info_output=$(info)
+  info_output=$(mca-cli-op info)
   echo "$info_output" > reboot_needed
   cpu_temp=$(ubnt-systool cputemp)
   cpu_load=$(ubnt-systool cpuload)
@@ -138,7 +138,7 @@ check_internet() {
 }
 
 # Run the "info" command and store its output in a variable
-info_output=$(info)
+info_output=$(mca-cli-op info)
 # Extract and assign data to variables
 model=$(echo "$info_output" | awk -F ': ' '/Model/ {print $2}')
 version=$(echo "$info_output" | awk -F ': ' '/Version/ {print $2}')
