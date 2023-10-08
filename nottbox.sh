@@ -124,7 +124,10 @@ check_internet() {
 }
 
 # print a message when the Nottbox starts
-log_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S')"
+log_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S') on $host_name ($local_ip)"
+host_name=$(hostname)
+local_ip=$(hostname -I | awk '{print $1}')
+pushover_message "Nottbox started at $(date +'%Y-%m-%d %H:%M:%S') on $host_name ($local_ip)"
 
 # main loop
 while true; do
