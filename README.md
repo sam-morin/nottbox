@@ -25,11 +25,11 @@ Nottbox was intended for Unifi devices but it should work on most linux operatin
 
 SSH into your Unifi device (this must be enabled explicitly within the web management portal)
 
-Params (included by default, remove from command to disable/negate the below options):
+Params (remove from command to disable/negate the below options - omit -u and -t if you don't wish to use Pushover for notifications):
 <ul>
-    <li>-e | --enable-service : enable the service (so it starts after reboots)</li>
-    <li>-u | --user-key : your Pushover User key from https://pushover.net</li>
-    <li>-t | --api-token : your Pushover Nottbox API token from https://pushover.net</li>
+    <li>-e | --enable-service : enable the service (so it starts after reboots) (optional, but recommended)</li>
+    <li>-u | --user-key : your Pushover User key from https://pushover.net (optional)</li>
+    <li>-t | --api-token : your Pushover Nottbox API token from https://pushover.net (optional)</li>
 </ul>
 
 Using cURL:
@@ -172,7 +172,7 @@ systemctl status nottbox
 
 Params (included by default, remove from command to disable/negate the below options):
 <ul>
-    <li>-f | --remove-log : delete the log as well (if this is omitted, the log file will be moved to <code>/root/nottbox.log</code> before deleting <code>/root/nottbox/</code>)</li>
+    <li>-f | --remove-log : delete the log as well (if this is omitted, the log file will be moved to <code>/root/nottbox.log</code> before deleting <code>/root/nottbox/</code>) (optional)</li>
 </ul>
 
 Use cURL:
