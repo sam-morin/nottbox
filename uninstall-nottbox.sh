@@ -48,12 +48,12 @@ rm -rf /root/nottbox
 # Uninstall the git package
 echo ""
 echo "Uninstalling git..."
-apt-get remove --purge git -y
+apt-get remove --purge git -y > /dev/null 2>&1;
 
 # Clean up unused packages and dependencies (optional)
 echo ""
 echo "Cleaning up packages..."
-apt-get autoremove -y
+apt-get autoremove -y > /dev/null 2>&1;
 
 echo ""
 echo "Nottbox has been uninstalled, and the git package has been removed."
