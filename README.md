@@ -29,6 +29,7 @@ Edit `nottbox.yml` to specify your preferences (if a pause is not needed, leave 
 ```yml
 # Configuration file for Nottbox
 DOMAIN_OR_IP: one.one.one.one
+PING_FREQUENCY_SEC: 30
 DOWNTIME_THRESHOLD_SEC: 150
 PAUSE_START: 3:45
 PAUSE_END: 4:45
@@ -71,7 +72,7 @@ vi /etc/systemd/system/nottbox.service
 Paste the following in the editor and then type `:x` and hit Enter to save:
 ```
 [Unit]
-Description=Nottbox is a Wattbox like service that will reboot a Unifi device if it cannot ping a remote host or IP for more than 5 minutes.
+Description=A software defined Wattbox cousin for Unifi devices.
 After=network.target
 
 [Service]
