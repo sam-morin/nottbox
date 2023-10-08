@@ -17,7 +17,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         -t|--api-token)
             API_TOKEN="$3"
-            shift 2
+            shift 3
             ;;
         *)
             echo "Unknown option: $key"

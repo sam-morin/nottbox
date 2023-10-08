@@ -1,6 +1,8 @@
 #!/bin/bash
 
-source .env.pushover
+if [ -e ".env.pushover" ]; then
+  source .env.pushover
+fi
 
 # function to log a message and prune if necessary
 log_message() {
