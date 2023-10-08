@@ -8,12 +8,35 @@ while [[ $# -gt 0 ]]; do
             enable_service=true
             shift
             ;;
+        -u|--user-key)
+            USER_KEY="$2"
+            shift 2
+            ;;
+        -t|--api-token)
+            API_TOKEN="$3"
+            shift 2
+            ;;
         *)
             echo "Unknown option: $key"
             exit 1
             ;;
     esac
 done
+
+# Function to create the .env.pushover file
+create_env_file() {
+    ENV_FILE=".env.pushover"
+    echo "USER_KEY=$USER_KEY" > "$ENV_FILE"
+    echo "API_TOKEN=$API_TOKEN" >> "$ENV_FILE"
+    echo "Environment variables saved to $ENV_FILE"
+}
+
+# Create the .env.pushover file if USER_KEY and API_TOKEN are provided
+if [ -n "$USER_KEY" ] && [ -n "$API_TOKEN" ]; then
+    echo ""
+    echo "Pushover keys passed! Creating .env.pushover file..."
+    create_env_file
+fi
 
 # Install git without prompting
 echo ""

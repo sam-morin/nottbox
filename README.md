@@ -28,11 +28,17 @@ SSH into your Unifi device (this must be enabled explicitly within the web manag
 Params (included by default, remove from command to disable/negate the below options):
 <ul>
     <li>-e | --enable-service : enable the service (so it starts after reboots)</li>
+    <li>-u | --user-key : your Pushover User Key from https://pushover.net</li>
+    <li>-t | --api-token : your Pushover Nottbox API token from https://pushover.net</li>
 </ul>
 
 Using cURL:
 ```shell
 curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh | bash -s -- -e
+```
+with Pushover keys specified:
+```shell
+curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh | bash -s -- -e -u "YourUserKey" -t "YourApiToken"
 ```
 *or wget:*
 ```shell
