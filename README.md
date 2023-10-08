@@ -24,8 +24,8 @@ SSH into your Unifi device (this must be enabled explicitly within the web manag
 ### Installs Nottbox as a service and starts the `nottbox` service.
 Params (included by default, remove from command to disable/negate the below options):
 <ul>
-    <li>-e : enable the service (so it starts after reboots)</li>
-    <li>-y : edit the default config file</li>
+    <li>-e|--enable-service : enable the service (so it starts after reboots)</li>
+    <li>-y|--edit-yaml : edit the default config file</li>
 </ul>
 
 Using cURL:
