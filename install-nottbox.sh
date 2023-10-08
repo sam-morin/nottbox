@@ -34,12 +34,6 @@ create_env_file() {
     echo "Environment variables saved to $ENV_FILE"
 }
 
-# Create the .env.pushover file if USER_KEY and API_TOKEN are provided
-if [ -n "$USER_KEY" ] && [ -n "$API_TOKEN" ]; then
-    echo "Pushover keys passed! Creating .env.pushover file..."
-    create_env_file
-fi
-
 # Install git without prompting
 echo ""
 echo "Installing git..."
@@ -61,6 +55,12 @@ apt-get remove --purge git -y > /dev/null 2>&1;
 echo ""
 echo "Cleaning up packages..."
 apt-get autoremove -y > /dev/null 2>&1;
+
+# Create the .env.pushover file if USER_KEY and API_TOKEN are provided
+if [ -n "$USER_KEY" ] && [ -n "$API_TOKEN" ]; then
+    echo "Pushover keys passed! Creating .env.pushover file..."
+    create_env_file
+fi
 
 # Make the script executable
 echo ""
