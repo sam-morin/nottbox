@@ -1,0 +1,13 @@
+[Unit]
+Description=Nottbox is a Wattbox like service that will reboot a Unifi device if it cannot ping a remote host or IP for more than 5 minutes.
+After=network.target
+
+[Service]
+ExecStart=/root/nottbox/nottbox.sh
+Restart=always
+User=root
+Group=root
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
