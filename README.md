@@ -21,7 +21,7 @@ BUT life is crazy and not all of us have a ton of time on our hands and/or the s
 Nottbox was intended for Unifi devices but it should work on most linux operating systems that use systemd (think OpenWRT).
 
 
-## Quick Deployment (script)
+# Quick Deployment (script)
 
 SSH into your Unifi device (this must be enabled explicitly within the web management portal)
 
@@ -64,7 +64,7 @@ systemctl status nottbox
 to show the status
 
 
-## Manual deployment
+# Manual deployment
 
 SSH into your Unifi device (this must be enabled explicitly within the web management portal)
 
@@ -139,7 +139,7 @@ WantedBy=multi-user.target
 ```
 
 
-# Reload daemon, enable and start the service
+## Reload daemon, enable and start the service
 
 Reload the systemd manager configuration:
 ```shell
@@ -187,6 +187,7 @@ What this does:
   <li>Removes the Nottbox directory</li>
   <li>Uninstalls git & cleans up packages</li>
 </ol>
+
 
 
 [Quick Deployment (script)](#quick-deployment-script) • [Uninstall Nottbox (script)](#uninstall-nottbox-script) • [Manual Deployment](#manual-deployment)
