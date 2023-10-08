@@ -21,7 +21,6 @@ Nottbox was intended for Unifi devices but Nottbox should work on most linux ope
 
 SSH into your Unifi device (this must be enabled explicitly within the web management portal)
 
-### Installs Nottbox as a service and starts the `nottbox` service.
 Params (included by default, remove from command to disable/negate the below options):
 <ul>
     <li>-e|--enable-service : enable the service (so it starts after reboots)</li>
