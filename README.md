@@ -23,11 +23,11 @@ SSH into your Unifi device (this must be enabled explicitly within the web manag
 
 Use the installer command/script:
 ```shell
-curl -sSL https://example.com/script.sh | bash
+curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh | bash
 ```
 *or using wget:*
 ```shell
-wget -qO- https://example.com/script.sh | bash
+wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh | bash
 ```
 
 Or install manually:
