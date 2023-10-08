@@ -1,5 +1,6 @@
 # Configuration file for Nottbox
 DOMAIN_OR_IP: one.one.one.one
+PING_FREQUENCY_SEC: 30
 DOWNTIME_THRESHOLD_SEC: 150
 PAUSE_START: 3:45
 PAUSE_END: 4:45

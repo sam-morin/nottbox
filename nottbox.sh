@@ -14,6 +14,7 @@ read_yaml_value() {
 
 # read values from the YAML file
 DOMAIN_OR_IP=$(read_yaml_value "DOMAIN_OR_IP" "$yaml_file")
+PING_FREQUENCY_SEC=$(read_yaml_value "PING_FREQUENCY_SEC" "$yaml_file")
 DOWNTIME_THRESHOLD_SEC=$(read_yaml_value "DOWNTIME_THRESHOLD_SEC" "$yaml_file")
 PAUSE_START=$(read_yaml_value "PAUSE_START" "$yaml_file")
 PAUSE_END=$(read_yaml_value "PAUSE_END" "$yaml_file")
@@ -79,7 +80,7 @@ check_internet() {
   if is_time_between "$START_HOUR" "$START_MINUTE" "$END_HOUR" "$END_MINUTE"; then
     echo "Nottbox is currently paused between $START_HOUR:$START_MINUTE and $END_HOUR:$END_MINUTE."
     while is_time_between "$START_HOUR" "$START_MINUTE" "$END_HOUR" "$END_MINUTE"; do
-      sleep 60 # sleep for 60 seconds to pause the Nottbox
+      sleep 60
     done
     echo "Resuming Nottbox after $END_HOUR:$END_MINUTE"
   fi
@@ -105,5 +106,5 @@ while true; do
       /bin/vbash -ic 'sudo shutdown -r now'
     fi
   fi
-  sleep 60  # check every 60 seconds
+  sleep $PING_FREQUENCY_SEC
 done
