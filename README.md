@@ -30,11 +30,11 @@ Params (included by default, remove from command to disable/negate the below opt
 
 Using cURL:
 ```shell
-curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh?_=$(date +%s) | bash -s -- -e
+curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh | bash -s -- -e
 ```
 *or wget:*
 ```shell
-wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh?_=$(date +%s) | bash -s -- -e
+wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh | bash -s -- -e
 ```
 
 ### Result:
