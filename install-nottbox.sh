@@ -8,10 +8,6 @@ while [[ $# -gt 0 ]]; do
             enable_service=true
             shift
             ;;
-        -y|--edit-yaml)
-            edit_yaml=true
-            shift
-            ;;
         *)
             echo "Unknown option: $key"
             exit 1
@@ -36,11 +32,6 @@ sudo cp nottbox.service /etc/systemd/system/
 
 # Reload systemd daemon to pick up the new service
 sudo systemctl daemon-reload
-
-# Edit the YAML file if specified
-if [ "$edit_yaml" == true ]; then
-    vi nottbox.yml
-fi
 
 # Enable the service if specified
 if [ "$enable_service" == true ]; then

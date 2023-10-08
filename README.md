@@ -26,16 +26,15 @@ SSH into your Unifi device (this must be enabled explicitly within the web manag
 Params (included by default, remove from command to disable/negate the below options):
 <ul>
     <li>-e|--enable-service : enable the service (so it starts after reboots)</li>
-    <li>-y|--edit-yaml : edit the default config file</li>
 </ul>
 
 Using cURL:
 ```shell
-curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh?_=$(date +%s) | bash -s -- -e -y
+curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh?_=$(date +%s) | bash -s -- -e
 ```
 *or wget:*
 ```shell
-wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh?_=$(date +%s) | bash -s -- -e -y
+wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/install-nottbox.sh?_=$(date +%s) | bash -s -- -e
 ```
 
 
