@@ -55,6 +55,11 @@ Oct 08 08:47:01 unifi-ckg2-1 systemd[1]: Started A software defined Wattbox cous
 Oct 08 08:47:01 unifi-ckg2-1 nottbox.sh[411110]: Nottbox will pause monitoring between 3:45 and 4:45 nightly update window.
 Oct 08 08:47:01 unifi-ckg2-1 nottbox.sh[411110]: Nottbox started at 2023-10-08 08:47:01
 ```
+Use `systemctl`:
+```shell
+systemctl status nottbox
+```
+to show the status
 
 
 ## Manual deployment
