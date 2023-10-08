@@ -1,6 +1,6 @@
 # Nottbox - Auto-reboot device on ping failures
 
-<span style="font-size: 16px;color: #0179D3;">A software defined Wattbox cousin - but not really like a Wattbox at all.</span>
+A software defined Wattbox cousin - but not really like a Wattbox at all.
 
 [Quick Deployment (script)](#quick-deployment-script) • [Uninstall Nottbox (script)](#uninstall-nottbox-script) • [Manual Deployment](#manual-deployment)
 
