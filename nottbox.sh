@@ -158,6 +158,8 @@ pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox started on $
 while true; do
   if ! check_internet; then
     log_message "Internet connection lost. Waiting for 5 minutes..."
+    log_message "Enabling flashing white light..."
+    echo '02' >/proc/gpio/led_pattern
     sleep $DOWNTIME_THRESHOLD_SEC
     
     if ! check_internet; then
