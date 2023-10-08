@@ -170,3 +170,13 @@ curl -sSL https://raw.githubusercontent.com/sam-morin/nottbox/main/uninstall-not
 ```shell
 wget -qO- https://raw.githubusercontent.com/sam-morin/nottbox/main/uninstall-nottbox.sh | bash
 ```
+
+What this does:
+<ol>
+  <li>Stop the Nottbox service</li>
+  <li>Disable the Nottbox service</li>
+  <li>Delete the Nottbox service</li>
+  <li>Reload systemd daemon</li>
+  <li>Remove the Nottbox directory</li>
+  <li>Uninstall git & clean up packages</li>
+</ol>
