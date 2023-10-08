@@ -29,7 +29,7 @@ Edit `nottbox.yml` to specify your preferences (if a pause is not needed, leave 
 ```yml
 # Configuration file for Nottbox
 DOMAIN_OR_IP: one.one.one.one
-DOWNTIME_THRESHOLD_MIN: 5
+DOWNTIME_THRESHOLD_SEC: 150
 PAUSE_START: 3:45
 PAUSE_END: 4:45
 LOG_FILE: /root/nottbox/nottbox.log
