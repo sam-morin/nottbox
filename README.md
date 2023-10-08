@@ -1,6 +1,6 @@
 # Nottbox
 
-Nottbox is a Wattbox-like bash script that will reboot a Unifi device if it cannot ping an IP address or hostname for longer than 5 minutes (default). Some devices in my Unifi environment will go offline while remaining physically powered on for no apparent reason. Some days/weeks/months are better than others, but today it happened 3 times - and now we have Nottbox.
+Nottbox is a Wattbox-like bash script (that can run as a service) that will reboot a Unifi device if it cannot ping an IP address or hostname for longer than 5 minutes (default). Some devices in my Unifi environment will go offline while remaining physically powered on for no apparent reason. Some days/weeks/months are better than others, but today it happened 3 times - and now we have Nottbox.
 
 If this script proves to be useful to you, it probably means you need to:
     - check to ensure you're running on the latest firmware version on all devices within your Unifi environment, including the network controller
@@ -16,7 +16,7 @@ SSH into your Unifi device (this must be enabled explicitly within the web manag
 
 In the root directory (you should be here by default after login - but you can check with `pwd`), clone the repo and CD into the Nottbox directory:
 ```shell
-git clone https://github.com/this-repo
+git clone https://github.com/sam-morin/nottbox.git
 cd nottbox
 ```
 
