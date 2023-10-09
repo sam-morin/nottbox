@@ -114,7 +114,7 @@ chmod +x nottbox.sh
 
 Run Nottbox:
 ```shell
-sh nottbox.sh
+./nottbox.sh
 ```
 
 
