@@ -52,7 +52,7 @@ is_target_reachable() {
   while [ "$pings" -lt 2 ]; do
     if /bin/ping -q -w 1 -c 1 -W 2 "$target" > /dev/null 2>&1; then
       ((pings++))
-      sleep 2
+      sleep 1
     else
       break
     fi
@@ -174,11 +174,9 @@ Status: $status"
 
 # function to perform the reboot action
 perform_reboot() {
-  log_message "All targets are unreachable. Initiating reboot..."
   touch reboot_needed
   get_data
-  # reboot now
-  echo "ooooo i would be rebooting now ooooo"
+  reboot now
 }
 
 while true; do
@@ -195,10 +193,11 @@ while true; do
   done
 
   if ! $any_target_online; then
-    log_message "All targets are unreachable."
+    log_message "All targets are unreachable. Initiating reboot..."
+    sleep 3
     perform_reboot
   else
-    log_message "Not all targets are unreachable. Checking again in $DOWNTIME_THRESHOLD_SEC..."
+    log_message "Not all targets are unreachable. Checking again in $DOWNTIME_THRESHOLD_SEC seconds..."
   fi
 
   sleep "$DOWNTIME_THRESHOLD_SEC"
