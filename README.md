@@ -4,7 +4,7 @@ A software defined Wattbox cousin - but not really like a Wattbox at all.
 
 [Quick Deployment (script)](#quick-deployment-script) • [Uninstall Nottbox (script)](#uninstall-nottbox-script) • [Manual Deployment](#manual-deployment)
 
-Nottbox is a Wattbox-like bash script (that can run as a service) that will reboot a Unifi device if it cannot ping an IP address or hostname for longer than 2.5 minutes (default - 150 seconds). Some devices in my Unifi environment will go offline while remaining physically powered on for no apparent reason. Some days/weeks/months are better than others, but today it happened 3 times - and now there is Nottbox.
+Nottbox is a Wattbox-like bash script (that can run as a service) that will reboot a Unifi device if it cannot ping an IP address or hostname for longer than 1.5 minutes (default - 90 seconds). Some devices in my Unifi environment will go offline while remaining physically powered on for no apparent reason. Some days/weeks/months are better than others, but today it happened 3 times - and now there is Nottbox.
 
 Since Nottbox is just a few bash scripts and a couple of config files, the entire project directory has a very small footprint at under 30KB. 
 
@@ -83,9 +83,9 @@ cd nottbox
 Edit `nottbox.yml` to specify your preferences (if a pause is not needed, leave `PAUSE_START` and `PAUSE_END` blank):
 ```yml
 # Configuration file for Nottbox
-DOMAIN_OR_IP: one.one.one.one, google.com, youtube.com, 8.8.8.8, justthat.com
+DOMAIN_OR_IP: one.one.one.one, 1.0.0.1, google.com, 8.8.8.8, 9.9.9.9, 208.67.222.222
 PING_FREQUENCY_SEC: 30
-DOWNTIME_THRESHOLD_SEC: 150
+DOWNTIME_THRESHOLD_SEC: 90
 PAUSE_START: 3:45
 PAUSE_END: 4:45
 LOG_FILE: /root/nottbox/nottbox.log
