@@ -92,6 +92,12 @@ LOG_FILE: /root/nottbox/nottbox.log
 ```
 *These are the default values*
 
+## Multiple IP addresses and host/domain names (targets)
+
+**You must supply at least 2 targets. You can supply as many targets beyond 2 as you'd like.**
+
+*Targets are defined as shown in the above `nottbox.yml` config file. Separate using commas in the DOMAIN_OR_IP value.*
+
 *Time is to be defined in 24 hour format*
 
 *If using the pause functionality, please ensure that your timezone is correct by comparing the current hour with the hour returned from this command:*
