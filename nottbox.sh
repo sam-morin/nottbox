@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# minimum number of successful pings required for each target
+min_pings=2
+
 if [ -e "/root/nottbox/.env.pushover" ]; then
   source /root/nottbox/.env.pushover
 fi
@@ -19,6 +22,48 @@ log_message() {
   fi
 }
 
+# function to check if the current time is within a specified time range
+is_time_between() {
+  local start_hour=$1
+  local start_minute=$2
+  local end_hour=$3
+  local end_minute=$4
+  local current_hour=$(date -u -d '-4 hours' +'%H' | sed 's/^0//') # remove leading zeros
+  local current_minute=$(date -u -d '-4 hours' +'%M' | sed 's/^0//') # convert to EST (-4 hours) and remove leading zeros
+
+  # convert start and end times to minutes since midnight
+  start_minutes=$((start_hour * 60 + start_minute))
+  end_minutes=$((end_hour * 60 + end_minute))
+  current_minutes=$((current_hour * 60 + current_minute))
+
+  # check if the current time is between the start and end times
+  [ "$current_minutes" -ge "$start_minutes" ] && [ "$current_minutes" -lt "$end_minutes" ]
+}
+
+is_target_reachable() {
+  local target="$1"
+  local pings=0
+
+  if is_time_between "$START_HOUR" "$START_MINUTE" "$END_HOUR" "$END_MINUTE"; then
+    log_message "Nottbox is currently paused between $START_HOUR:$START_MINUTE and $END_HOUR:$END_MINUTE."
+    while is_time_between "$START_HOUR" "$START_MINUTE" "$END_HOUR" "$END_MINUTE"; do
+      sleep 60
+    done
+    log_message "Resuming Nottbox after $END_HOUR:$END_MINUTE"
+  fi
+
+  while [ "$pings" -lt 2 ]; do
+    if /bin/ping -q -w 1 -c 1 -W 2 "$target" > /dev/null 2>&1; then
+      ((pings++))
+      sleep 2
+    else
+      break
+    fi
+  done
+
+  echo "$pings"
+}
+
 # define a function to read a value from the YAML file
 read_yaml_value() {
   local key="$1"
@@ -29,11 +74,11 @@ read_yaml_value() {
 }
 
 pushover_message() {
-  # Send a Pushover notification
+  # send a Pushover notification
   TITLE="$1"
   MESSAGE="$2"
 
-  # Check if USER_KEY or API_TOKEN is empty
+  # check if USER_KEY or API_TOKEN is empty
   if [ -n "$USER_KEY" ] && [ -n "$API_TOKEN" ]; then
     curl -s \
       --form-string "token=$API_TOKEN" \
@@ -58,6 +103,9 @@ PAUSE_START=$(read_yaml_value "PAUSE_START" "$yaml_file")
 PAUSE_END=$(read_yaml_value "PAUSE_END" "$yaml_file")
 LOG_FILE=$(read_yaml_value "LOG_FILE" "$yaml_file")
 
+# convert the comma-separated list of domains and IPs to an array
+IFS=', ' read -r -a targets <<< "$DOMAIN_OR_IP"
+
 get_data() {
   info_output=$(mca-cli-op info)
   echo "$info_output" > reboot_needed
@@ -68,14 +116,14 @@ get_data() {
 }
 pull_data() {
   data=$(<reboot_needed)
-  return $data
+  echo "$data"
 }
 
-# Check if the file "reboot_needed" exists in the current directory
+# check if the file "reboot_needed" exists in the current directory
 if [ -e "reboot_needed" ]; then
   pushover_message "$host_name ($public_ip) - Nottbox Alert" "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online. \n\n$(pull_data)"    
   log_message "Nottbox had been unable to ping '$DOMAIN_OF_IP' for longer than the configured time of $DOWNTIM_THRESHOLD_SEC seconds so a reboot command was issued. The Unifi device is now back online."
-  # Delete the file "reboot_needed"
+  # delete the file "reboot_needed"
   rm -f "reboot_needed"
 fi
 
@@ -87,12 +135,12 @@ split_time() {
 
 # check if PAUSE_START and PAUSE_END are not empty strings
 if [ -n "$PAUSE_START" ] && [ -n "$PAUSE_END" ]; then
-  # Split the PAUSE_START time into hours and minutes
+  # split the PAUSE_START time into hours and minutes
   echo "$(split_time "$PAUSE_START")" > temp_file
   IFS=" " read -r START_HOUR START_MINUTE < temp_file
   rm -f temp_file
 
-  # Split the PAUSE_END time into hours and minutes
+  # split the PAUSE_END time into hours and minutes
   echo "$(split_time "$PAUSE_END")" > temp_file
   IFS=" " read -r END_HOUR END_MINUTE < temp_file
   rm -f temp_file
@@ -101,24 +149,6 @@ if [ -n "$PAUSE_START" ] && [ -n "$PAUSE_END" ]; then
 else
   log_message "Nottbox will not pause for a nightly update window because PAUSE_START and/or PAUSE_END was not specified."
 fi
-
-# function to check if the current time is within a specified time range
-is_time_between() {
-  local start_hour=$1
-  local start_minute=$2
-  local end_hour=$3
-  local end_minute=$4
-  local current_hour=$(date -u -d '-4 hours' +'%H' | sed 's/^0//') # remove leading zeros
-  local current_minute=$(date -u -d '-4 hours' +'%M' | sed 's/^0//') # convert to EST (-4 hours) and remove leading zeros
-
-  # convert start and end times to minutes since midnight
-  start_minutes=$((start_hour * 60 + start_minute))
-  end_minutes=$((end_hour * 60 + end_minute))
-  current_minutes=$((current_hour * 60 + current_minute))
-
-  # check if the current time is between the start and end times
-  [ "$current_minutes" -ge "$start_minutes" ] && [ "$current_minutes" -lt "$end_minutes" ]
-}
 
 # function to check internet connectivity
 check_internet() {
@@ -162,20 +192,38 @@ Uptime: $uptime \\
 NTP Status: $ntp_status \\
 Status: $status"
 
-# main loop
+
+# function to perform the reboot action
+perform_reboot() {
+  log_message "All targets are unreachable. Initiating reboot..."
+  touch reboot_needed
+  get_data
+  # reboot now
+  echo "ooooo i would be rebooting now ooooo"
+}
+
+any_target_online=false  # Initialize to false
+
 while true; do
-  if ! check_internet; then
-    log_message "Internet connection lost. Waiting for 5 minutes..."
-    log_message "Enabling flashing white light..."
-    echo '02' >/proc/gpio/led_pattern
-    sleep $DOWNTIME_THRESHOLD_SEC
-    
-    if ! check_internet; then
-      log_message "Internet still not available. Rebooting..."
-      touch reboot_needed
-      get_data
-      /bin/vbash -ic 'sudo shutdown -r now'
+  any_target_online=false  # Reset the flag at the beginning of each iteration
+
+  for target in "${targets[@]}"; do
+    num_successful_pings=$(is_target_reachable "$target")
+    if [ "$num_successful_pings" -gt 0 ]; then
+      any_target_online=true  # Set to true if any target is reachable
+      log_message "Ping to $target succeeded from main loop."
+    else
+      log_message "Ping to $target failed from main loop."
     fi
+  done
+
+  if ! $any_target_online; then
+    log_message "All targets are unreachable."
+    perform_reboot
+  else
+    log_message "Not all targets are unreachable."
   fi
-  sleep $PING_FREQUENCY_SEC
+
+  sleep "$DOWNTIME_THRESHOLD_SEC"
 done
+
