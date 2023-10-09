@@ -4,7 +4,7 @@ A software defined Wattbox cousin - but not really like a Wattbox at all.
 
 [Quick Deployment (script)](#quick-deployment-script) • [Uninstall Nottbox (script)](#uninstall-nottbox-script) • [Manual Deployment](#manual-deployment)
 
-Nottbox is a Wattbox-like bash script (that can run as a service) that will reboot a Unifi device if it cannot ping an IP address or hostname for longer than 1.5 minutes (default - 90 seconds). Some devices in my Unifi environment will go offline while remaining physically powered on for no apparent reason. Some days/weeks/months are better than others, but today it happened 3 times - and now there is Nottbox.
+Nottbox is a Wattbox-like bash script (that can run as a service) that will reboot a Unifi device if it cannot ping an IP address or hostname for longer than 1.5 minutes (default - 150 seconds). Some devices in my Unifi environment will go offline while remaining physically powered on for no apparent reason. Some days/weeks/months are better than others, but today it happened 3 times - and now there is Nottbox.
 
 Since Nottbox is just a few bash scripts and a couple of config files, the entire project directory has a very small footprint at under 30KB. 
 
