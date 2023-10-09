@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# minimum number of successful pings required for each target
-min_pings=2
-
 if [ -e "/root/nottbox/.env.pushover" ]; then
   source /root/nottbox/.env.pushover
 fi
@@ -150,23 +147,6 @@ else
   log_message "Nottbox will not pause for a nightly update window because PAUSE_START and/or PAUSE_END was not specified."
 fi
 
-# function to check internet connectivity
-check_internet() {
-  if is_time_between "$START_HOUR" "$START_MINUTE" "$END_HOUR" "$END_MINUTE"; then
-    log_message "Nottbox is currently paused between $START_HOUR:$START_MINUTE and $END_HOUR:$END_MINUTE."
-    while is_time_between "$START_HOUR" "$START_MINUTE" "$END_HOUR" "$END_MINUTE"; do
-      sleep 60
-    done
-    log_message "Resuming Nottbox after $END_HOUR:$END_MINUTE"
-  fi
-  
-  if /bin/ping -q -w 1 -c 1 "$DOMAIN_OR_IP" > /dev/null 2>&1; then
-    return 0
-  else
-    return 1
-  fi
-}
-
 # Run the "info" command and store its output in a variable
 info_output=$(mca-cli-op info)
 # Extract and assign data to variables
@@ -192,7 +172,6 @@ Uptime: $uptime \\
 NTP Status: $ntp_status \\
 Status: $status"
 
-
 # function to perform the reboot action
 perform_reboot() {
   log_message "All targets are unreachable. Initiating reboot..."
@@ -201,8 +180,6 @@ perform_reboot() {
   # reboot now
   echo "ooooo i would be rebooting now ooooo"
 }
-
-any_target_online=false  # Initialize to false
 
 while true; do
   any_target_online=false  # Reset the flag at the beginning of each iteration

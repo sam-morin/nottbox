@@ -83,7 +83,7 @@ cd nottbox
 Edit `nottbox.yml` to specify your preferences (if a pause is not needed, leave `PAUSE_START` and `PAUSE_END` blank):
 ```yml
 # Configuration file for Nottbox
-DOMAIN_OR_IP: one.one.one.one
+DOMAIN_OR_IP: one.one.one.one, google.com, youtube.com, 8.8.8.8, justthat.com
 PING_FREQUENCY_SEC: 30
 DOWNTIME_THRESHOLD_SEC: 150
 PAUSE_START: 3:45
