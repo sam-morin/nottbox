@@ -201,9 +201,9 @@ while true; do
       num_successful_pings=$(is_target_reachable "$target")
       if [ "$num_successful_pings" -gt 0 ]; then
         any_target_online=true  # Set to true if any target is reachable
-        log_message "Ping to $target succeeded from main loop."
+        log_message "Pings to $target succeeded from main loop."
       else
-        log_message "Ping to $target failed from main loop."
+        log_message "Pings to $target failed from main loop."
       fi
     done
     if ! $any_target_online; then
