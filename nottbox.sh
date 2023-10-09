@@ -221,7 +221,7 @@ while true; do
     log_message "All targets are unreachable."
     perform_reboot
   else
-    log_message "Not all targets are unreachable."
+    log_message "Not all targets are unreachable. Checking again in $DOWNTIME_THRESHOLD_SEC..."
   fi
 
   sleep "$DOWNTIME_THRESHOLD_SEC"
