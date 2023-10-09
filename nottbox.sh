@@ -176,9 +176,11 @@ Status: $status"
 perform_reboot() {
   touch reboot_needed
   get_data
-  reboot now
+  # reboot now
+  echo "0ooo i would reboot now ooooo"
 }
 
+any_target_online=false
 while true; do
   any_target_online=false  # Reset the flag at the beginning of each iteration
 
@@ -193,9 +195,23 @@ while true; do
   done
 
   if ! $any_target_online; then
-    log_message "All targets are unreachable. Initiating reboot..."
-    sleep 3
-    perform_reboot
+    any_target_online=false
+    log_message "All targets are unreachable. Checking once more after $DOWNTIME_THRESHOLD_SEC seconds and rebooting if not."
+    sleep "$DOWNTIME_THRESHOLD_SEC"
+    for target in "${targets[@]}"; do
+      num_successful_pings=$(is_target_reachable "$target")
+      if [ "$num_successful_pings" -gt 0 ]; then
+        any_target_online=true  # Set to true if any target is reachable
+        log_message "Ping to $target succeeded from main loop."
+      else
+        log_message "Ping to $target failed from main loop."
+      fi
+    done
+    if ! $any_target_online; then
+      perform_reboot
+    else
+      log_message "Not all targets are unreachable. Checking again in $DOWNTIME_THRESHOLD_SEC seconds..."
+    fi
   else
     log_message "Not all targets are unreachable. Checking again in $DOWNTIME_THRESHOLD_SEC seconds..."
   fi
