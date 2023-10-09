@@ -52,7 +52,7 @@ is_target_reachable() {
   while [ "$pings" -lt 2 ]; do
     if /bin/ping -q -w 1 -c 1 -W 2 "$target" > /dev/null 2>&1; then
       ((pings++))
-      sleep 1
+      sleep 2
     else
       break
     fi
