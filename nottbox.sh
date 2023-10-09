@@ -176,8 +176,7 @@ Status: $status"
 perform_reboot() {
   touch reboot_needed
   get_data
-  # reboot now
-  echo "0ooo i would reboot now ooooo"
+  reboot
 }
 
 any_target_online=false
